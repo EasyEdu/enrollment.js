@@ -1,26 +1,40 @@
-window.easyEdu = {
-  enroll: (authKey, params, sucessCallback, errorCallback) => {
-    if (!authKey || typeof authKey !== "string") throw "Auth key for EasyEdu class is missing, please pass it as first argument, it must be a string."
-    if (!params || typeof params !== "object") throw "Params object is missing, please pass it as second argument, it must be an object."
+(function () {
+  function validateParam(value, kind, name) {
+    if (!value) throw(name + " param is missing.");
+    if (typeof value !== kind) throw(name + " must be a " + kind + ".");
+  }
 
-    let req = new XMLHttpRequest()
-    let reqPayload = Object.assign(params, { auth_token: authKey })
+  function enroll(authKey, params, sucessCallback, errorCallback) {
+    validateParam(authKey, "string", "authKey");
+    validateParam(params, "object", "params");
 
-    const onError = (e) => {
-      errorCallback && errorCallback(JSON.parse(e.currentTarget.response))
+    var req = new XMLHttpRequest();
+    var reqPayload = Object.assign(params, { auth_token: authKey });
+
+    function onError(e) {
+      errorCallback && errorCallback(JSON.parse(e.currentTarget.response));
     }
 
-    req.addEventListener("load", (e) => {
+    function onSucces(e) {
+      sucessCallback && sucessCallback(JSON.parse(e.currentTarget.response));
+    }
+
+    req.addEventListener("error", onError);
+    req.addEventListener("load", function (e) {
       if (e.currentTarget.status == 200) {
-        sucessCallback && sucessCallback(JSON.parse(e.currentTarget.response))
+        onSucces(e);
       } else {
-        onError(e)
+        onError(e);
       }
     })
 
-    req.addEventListener("error", (e) => { onError(e) })
-
-    req.open("POST", "http://localhost:9292/classes/enroll")
-    req.send(JSON.stringify(reqPayload))
+    req.open("POST", "https://api.easyedu.co/classes/enroll");
+    req.send(JSON.stringify(reqPayload));
   }
-}
+
+  window.easyedu = window.easyedu || {
+    enroll: function () {
+      enroll.apply(this, arguments);
+    }
+  }
+})();

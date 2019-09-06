@@ -5,29 +5,43 @@ describe('enroll function', () => {
 
   it('is defined in the window object', () => {
     cy.window().then((win) => {
-      expect(win.easyEdu.enroll).to.exist
-      expect(typeof win.easyEdu.enroll).to.eq('function')
+      expect(win.easyedu.enroll).to.exist
+      expect(typeof win.easyedu.enroll).to.eq('function')
     })
   })
 
-  context('when does not receive authKey', () => {
-    it('throws an exception', () => {
-      let errorMessage = "Auth key for EasyEdu class is missing, please pass it as first argument, it must be a string."
+  context('authKey param', () => {
+    context('when does not receive authKey', () => {
+      it('throws an exception', () => {
+        cy.window().then((win) => {
+          expect(() => { win.easyedu.enroll() }).to.throw("authKey param is missing.")
+        })
+      })
+    })
 
-      cy.window().then((win) => {
-        expect(() => { win.easyEdu.enroll() }).to.throw(errorMessage)
-        expect(() => { win.easyEdu.enroll({}) }).to.throw(errorMessage)
+    context('when receive a not string authKey', () => {
+      it('throws an exception', () => {
+        cy.window().then((win) => {
+          expect(() => { win.easyedu.enroll({}) }).to.throw("authKey must be a string.")
+        })
       })
     })
   })
 
-  context('when does not receive params object', () => {
-    it('throws an exception', () => {
-      let errorMessage = "Params object is missing, please pass it as second argument, it must be an object."
+  context('params param', () => {
+    context('when does not receive params', () => {
+      it('throws an exception', () => {
+        cy.window().then((win) => {
+          expect(() => { win.easyedu.enroll('a') }).to.throw("params param is missing.")
+        })
+      })
+    })
 
-      cy.window().then((win) => {
-        expect(() => { win.easyEdu.enroll('a') }).to.throw(errorMessage)
-        expect(() => { win.easyEdu.enroll('a', () => {}) }).to.throw(errorMessage)
+    context('when receive a not string authKey', () => {
+      it('throws an exception', () => {
+        cy.window().then((win) => {
+          expect(() => { win.easyedu.enroll('a', 1) }).to.throw("params must be a object.")
+        })
       })
     })
   })
@@ -46,7 +60,7 @@ describe('enroll function', () => {
 
     const subject = (sucessCallback, errorCallback) => {
       cy.window().then((win) => {
-        win.easyEdu.enroll(auth_token, { email: email, full_name: full_name }, sucessCallback, errorCallback)
+        win.easyedu.enroll(auth_token, { email: email, full_name: full_name }, sucessCallback, errorCallback)
       })
     }
 
