@@ -15,13 +15,13 @@ var envConfig = function () {
   return {
     production: {
       bucket: 'easyedu',
-      distribution: 'E2GJGKNHQG9BMQ',
+      distribution: process.env.EASYEDU_SCRIPTS_PRODUCTION_DISTRIBUTION,
       url: 'https://scripts.easyedu.co'
     },
 
     staging: {
       bucket: 'easyedu',
-      distribution: 'E2SXXSSNL7MDHL',
+      distribution: process.env.EASYEDU_SCRIPTS_STAGING_DISTRIBUTION,
       url: 'https://scripts-staging.easyedu.co'
     }
   }[envName];
