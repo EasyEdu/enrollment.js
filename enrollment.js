@@ -28,7 +28,8 @@
       }
     })
 
-    req.open("POST", "https://api.easyedu.co/classes/enroll");
+    req.open("POST", "http://localhost:9292/classes/enroll");
+    req.setRequestHeader('Content-Type', 'application/json');
     req.send(JSON.stringify(reqPayload));
   }
 
