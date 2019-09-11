@@ -16,13 +16,13 @@ var envConfig = function () {
     production: {
       bucket: 'easyedu',
       distribution: process.env.EASYEDU_SCRIPTS_PRODUCTION_DISTRIBUTION,
-      url: 'https://scripts.easyedu.co'
+      url: 'https://api.easyedu.co'
     },
 
     staging: {
       bucket: 'easyedu',
       distribution: process.env.EASYEDU_SCRIPTS_STAGING_DISTRIBUTION,
-      url: 'https://scripts-staging.easyedu.co'
+      url: 'https://easy-edu.herokuapp.com'
     }
   }[envName];
 };
