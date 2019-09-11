@@ -15,14 +15,14 @@
       errorCallback && errorCallback(JSON.parse(e.currentTarget.response));
     }
 
-    function onSucces(e) {
+    function onSuccess(e) {
       sucessCallback && sucessCallback(JSON.parse(e.currentTarget.response));
     }
 
     req.addEventListener("error", onError);
     req.addEventListener("load", function (e) {
       if (e.currentTarget.status == 200) {
-        onSucces(e);
+        onSuccess(e);
       } else {
         onError(e);
       }

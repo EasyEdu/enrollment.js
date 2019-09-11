@@ -6,7 +6,6 @@ var gulp = require('gulp'),
     gzip = require('gulp-gzip'),
     cloudfront = require('gulp-cloudfront-invalidate'),
     AWS = require('aws-sdk'),
-    _ = require('underscore'),
    replace = require('gulp-replace');
 
 var envName = process.env.ENV || 'staging';
@@ -41,7 +40,6 @@ function cloudfrontConfig () {
     accessKeyId: process.env.AWS_ACCESS_KEY_ID,
     secretAccessKey: process.env.AWS_SECRET_ACCESS_KEY,
     distribution: envConfig().distribution
-    // wait: true,
   };
 };
 
@@ -69,9 +67,9 @@ gulp.task('compress', function() {
   return gulp.src(['dist/' + envName + '/enrollment.js'])
     .pipe(gzip({
       gzipOptions: {
-        level: 9
+        level: 9 // best compression
       }
-    })) // best compression
+    }))
     .pipe(gulp.dest('dist/' + envName));
 });
 
@@ -88,6 +86,6 @@ gulp.task('upload', function() {
 });
 
 gulp.task('invalidate', function() {
-  var config = _.defaults({ paths: ['/' + envName+ '/scripts/enrollment.js'] }, cloudfrontConfig());
+  var config = Object.assign({ paths: ['/' + envName+ '/scripts/enrollment.js'] }, cloudfrontConfig());
   return gulp.src('dist/' + envName + '/enrollment.js.gz').pipe(cloudfront(config));
 });
