@@ -1,4 +1,4 @@
-[![CircleCI](https://circleci.com/gh/EasyEdu/enrollment/tree/master.svg?style=svg)](https://circleci.com/gh/EasyEdu/enrollment/tree/master)
+[![CircleCI](https://circleci.com/gh/EasyEdu/enrollment.js/tree/master.svg?style=svg)](https://circleci.com/gh/EasyEdu/enrollment/tree/master)
 
 # enrollment
 A JS client to allow enroll students on EasyEdu course's classes by integrating it on your sites.  
