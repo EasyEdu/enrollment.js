@@ -8,8 +8,9 @@
     validateParam(authKey, "string", "authKey");
     validateParam(params, "object", "params");
 
+    params.auth_token = authKey;
     var req = new XMLHttpRequest();
-    var reqPayload = Object.assign(params, { auth_token: authKey });
+    var reqPayload = params;
 
     function onError(e) {
       errorCallback && errorCallback(JSON.parse(e.currentTarget.response));
