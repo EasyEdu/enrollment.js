@@ -86,6 +86,6 @@ gulp.task('upload', function() {
 });
 
 gulp.task('invalidate', function() {
-  var config = Object.assign({ paths: ['/' + envName+ '/scripts/enrollment.js'] }, cloudfrontConfig());
+  var config = Object.assign({ paths: ['/enrollment.js'] }, cloudfrontConfig());
   return gulp.src('dist/' + envName + '/enrollment.js.gz').pipe(cloudfront(config));
 });
