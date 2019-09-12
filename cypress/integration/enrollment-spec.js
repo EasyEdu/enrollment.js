@@ -127,3 +127,39 @@ describe('enroll function', () => {
     })
   })
 })
+
+describe('enroll form', () => {
+  let response = {
+    id: 20,
+    user: { id: 2 },
+    klass: { id: 2 }
+  }
+
+  beforeEach(() => {
+    cy.visit('enrollment-test.html')
+
+    cy.server()
+    cy.route({
+      method: 'POST',
+      url: '/classes/enroll',
+      status: 200,
+      response: response
+    }).as('enroll')
+  })
+
+  context('when all inputs are filled', () => {
+    it('enrolls the student', () => {
+      const stub = cy.stub()
+
+      cy.on('window:alert', stub)
+
+      cy.get('input[name=full_name]').type('Finn Mertens')
+      cy.get('input[name=email]').type('finn-the-human@ieducativa.com.br')
+      cy.get('input[type=submit]').click()
+
+      cy.wait('@enroll').then((xhr) => {
+        expect(stub.getCall(0)).to.be.calledWith('Congrats! you are now enrolled on this course! Please check the access information, on your email.')
+      })
+    })
+  })
+})
