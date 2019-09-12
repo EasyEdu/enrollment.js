@@ -8,8 +8,8 @@
     validateParam(authKey, "string", "authKey");
     validateParam(params, "object", "params");
 
+    params.auth_token = authKey;
     var req = new XMLHttpRequest();
-    var reqPayload = Object.assign(params, { auth_token: authKey });
 
     function onError(e) {
       errorCallback && errorCallback(JSON.parse(e.currentTarget.response));
@@ -30,7 +30,7 @@
 
     req.open("POST", "http://localhost:9292/classes/enroll");
     req.setRequestHeader('Content-Type', 'application/json');
-    req.send(JSON.stringify(reqPayload));
+    req.send(JSON.stringify(params));
   }
 
   window.easyedu = window.easyedu || {

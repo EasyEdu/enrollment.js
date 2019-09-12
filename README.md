@@ -44,7 +44,7 @@ Then, in a script you can call:
 Usually you will call this code inside a sign up form callback.
 
 ### Arguments
-The first argument for the window.easyedu.enroll function is an authorization token of the class you are trying to enroll your users to. You can contact us to have a authorization token for your classes at `contato@ieducativa.com.br`  
+The first argument for the window.easyedu.enroll function is an authorization token of the class you are trying to enroll your users to. You can get the authorization token by editing the class on the EasyEdu app.  
 
 The second argument for the window.easyedu.enroll function is JS object containing user properties:  
 * email: the email of the user that will be enrolled to the class (required);  
