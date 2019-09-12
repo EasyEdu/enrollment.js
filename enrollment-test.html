@@ -2,8 +2,46 @@
 <html>
   <head>
     <script type="text/javascript" src="enrollment.js"></script>
+
+    <script type="text/javascript">
+      function successCallback (response) {
+        window.alert('Congrats! you are now enrolled on this course! Please check the access information, on your email.');
+      }
+
+      function errorCallback (response) {
+        // there are two formats of errors, please check the "API errors" section bellow in this readme file to know more:
+        // in this example we handle the error messages by showing an alert to the user, but feel free to customize it to your needs, like showing a more gracefully html error element, etc:
+
+        if (response && response.message) {
+          window.alert(response.message);
+        } else if (response && typeof response[0] === 'string') {
+          window.alert(response[0]);
+        } else {
+          window.alert('Sorry but an error happened, please try again!');
+        }
+      }
+
+      function enrollStudent (form) {
+        window.easyedu.enroll('K88vLRAMLCt7NB0mgssU3rrP5CWDlIDLEkucI2kk9RwjwRU3BdDPFyX91hNyiBy2NEZPRf1D1AzT0dHOKf7WoA', {
+          email: form['email'].value,
+          full_name: form['full_name'].value,
+        }, successCallback, errorCallback);
+
+        return false;
+      }
+    </script>
   </head>
   <body>
     <h1>This is a test page!</h1>
+
+    <form onsubmit="return enrollStudent(this)">
+      Full name:<br>
+      <input type="text" name="full_name" autocomplete="off" required><br><br>
+
+      E-mail:<br>
+      <input type="email" name="email" autocomplete="off" required><br><br>
+
+      <input type="submit" value="Enroll">
+    </form>
   </body>
 </html>

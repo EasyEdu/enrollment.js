@@ -5,43 +5,64 @@ A JS client to allow enroll students on EasyEdu course's classes by integrating 
   
 You can integrate this client on your course landing page for example, this way you can collect lead information, and enroll then on your EasyEdu course's class.
 
-## Usage  
+## Usage
 
-First of all, add this tag to your html page, inside the `<head>` element:
+First you need to load the enrollment script, into your HTML page, then you can call the `window.easyedu.enroll` function passing the class auth token, and the student full name and email.
+
+Here is a full working HTML example page that allows students to join an EasyEdu class:
+
 ```html
-  <script type="text/javascript" src="https://scripts.easyedu.co/enrollment.js"></script>
-```
+  <!DOCTYPE html>
+  <html>
+    <head>
+      <script type="text/javascript" src="https://scripts.easyedu.co/enrollment.js"></script>
 
-Then, in a script you can call:
+      <script type="text/javascript">
+        function successCallback (response) {
+          window.alert('Congrats! you are now enrolled on this course! Please check the access information, on your email.');
+        }
 
-```js
-<script type="text/javascript">
-  function successCallback (response) {
-    window.alert('Congrats! you are now enrolled on this course! Please check the access information, on your email.');
-  }
+        function errorCallback (response) {
+          // there are two formats of errors, please check the "API errors" section bellow in this readme file to know more:
+          // in this example we handle the error messages by showing an alert to the user, but feel free to customize it to your needs, like showing a more gracefully html error element, etc:
 
-  function errorCallback (response) {
-    // there are two formats of errors, please check the "API errors" section bellow in this readme file to know more:
+          if (response && response.message) {
+            window.alert(response.message);
+          } else if (response && typeof response[0] === 'string') {
+            window.alert(response[0]);
+          } else {
+            window.alert('Sorry but an error happened, please try again!');
+          }
+        }
 
-    // in this example we handle the error messages by showing an alert to the user, but feel free to customize it to your needs, like showing a more gracefully html error element, etc:
+        function enrollStudent (form) {
+          // PLEASE PUT YOUR CLASS AUTH TOKEN BELLOW, you can get it by editing the class, on the EasyEdu app.
+          window.easyedu.enroll('put-your-class-auth-token-here', {
+            email: form['email'].value,
+            full_name: form['full_name'].value,
+          }, successCallback, errorCallback);
 
-    if (response && response.message) {
-      window.alert(response.message);
-    } else if (response && typeof response[0] === 'string') {
-      window.alert(response[0]);
-    } else {
-      window.alert('Sorry but an error happened, please try again!');
-    }
-  }
+          return false;
+        }
+      </script>
+    </head>
 
-  window.easyedu.enroll('your-class-auth-token-here', {
-    email: 'new-student-email@mail.com',
-    full_name: 'Full Name'
-  }, successCallback, errorCallback);
-</script>
+    <body>
+      <h1>Enrollment example page!</h1>
+
+      <form onsubmit="return enrollStudent(this)">
+        Full name:<br>
+        <input type="text" name="full_name" autocomplete="off" required><br><br>
+
+        E-mail:<br>
+        <input type="email" name="email" autocomplete="off" required><br><br>
+
+        <input type="submit" value="Enroll">
+      </form>
+    </body>
+  </html>
   ```
   
-Usually you will call this code inside a sign up form callback.
 
 ### Arguments
 The first argument for the window.easyedu.enroll function is an authorization token of the class you are trying to enroll your users to. You can get the authorization token by editing the class on the EasyEdu app.  
