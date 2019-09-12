@@ -1,0 +1,31 @@
+{
+  "name": "enrollment-client",
+  "version": "1.0.0",
+  "description": "A JS client, to allow enrollment of students on EasyEdu courses by integrating it on your site.",
+  "main": "index.js",
+  "scripts": {
+    "test": "$(npm bin)/cypress open",
+    "cypress": "cypress run"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/EasyEdu/enrollment.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/EasyEdu/enrollment/issues"
+  },
+  "homepage": "https://github.com/EasyEdu/enrollment#readme",
+  "dependencies": {},
+  "devDependencies": {
+    "cypress": "^3.4.1",
+    "gulp": "^4.0.2",
+    "gulp-cloudfront-invalidate": "^0.1.5",
+    "gulp-gzip": "^1.4.2",
+    "gulp-minify": "^3.1.0",
+    "gulp-replace": "^1.0.0",
+    "gulp-s3": "^0.11.0",
+    "gulp-shell": "^0.7.1"
+  }
+}
