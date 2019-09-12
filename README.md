@@ -16,10 +16,28 @@ Then, in a script you can call:
 
 ```js
 <script type="text/javascript">
+  function successCallback (response) {
+    window.alert('Congrats! you are now enrolled on this course! Please check the access information, on your email.');
+  }
+
+  function errorCallback (response) {
+    // there are two formats of errors, please check the "API errors" section bellow in this readme file to know more:
+
+    // in this example we handle the error messages by showing an alert to the user, but feel free to customize it to your needs, like showing a more gracefully html error element, etc:
+
+    if (response && response.message) {
+      window.alert(response.message);
+    } else if (response && typeof response[0] === 'string') {
+      window.alert(response[0]);
+    } else {
+      window.alert('Sorry but an error happened, please try again!');
+    }
+  }
+
   window.easyedu.enroll('your-class-auth-token-here', {
     email: 'new-student-email@mail.com',
     full_name: 'Full Name'
-  }, sucessCallback, errorCallback);
+  }, successCallback, errorCallback);
 </script>
   ```
   
@@ -37,19 +55,19 @@ The third argument for the window.easyedu.enroll function is a function that wil
 The fourth argument for the window.easyedu.enroll function is a function that will be called when the enrollment request to our API gets some error as response. The callback will receive the request response as argument.  
 
 ### Client errors
- * If you don't pass the authorization key, you will get the error: `Uncaught authKey param is missing.`  
- * If you pass a authorization token that is not a string, you will get the error: `Uncaught authKey must be a string.`  
- * If you don't pass the user properties object, you will get the error: `Uncaught params param is missing.`  
- * If you pass a user properties object that is not an object, you will get the error: `Uncaught params param must be a object.`
+ * If you don't pass the authorization key, it will raise this error: `Uncaught authKey param is missing.`  
+ * If you pass a authorization token that is not a string, it will raise this error: `Uncaught authKey must be a string.`  
+ * If you don't pass the user properties object, it will raise this error: `Uncaught params param is missing.`  
+ * If you pass a user properties object that is not an object, it will raise this error: `Uncaught params param must be a object.`
 
 
 ### API errors
-If the given authorization key is not valid, you will get the following error as on the errorCallback:
+If the given authorization key is not valid, you will get the following error as the first argument on the errorCallback:
 ```js
 ["No class found with this auth_token"]
 ```
 
-If the given user properties object does not contain a key email, you will get the following error as on the errorCallback:
+If the given user properties object does not contain a key email, you will get the following error as the first argument on the errorCallback:
 ```js
 { 
    "message":"Parameter is required",
@@ -59,7 +77,7 @@ If the given user properties object does not contain a key email, you will get t
 }
 ```
 
-If the given user properties object contain a key email, but the value is not a valid email, you will get the following error as on the errorCallback:
+If the given user properties object contain a key email, but the value is not a valid email, you will get the following error as the first argument on the errorCallback:
 ```js
 { 
    "message":"Email format is invalid.",
@@ -69,7 +87,7 @@ If the given user properties object contain a key email, but the value is not a 
 }
 ```
 
-Last but not least, if the given user properties object contain a key email, but there is already a enrolled student in the given class with the given email, you will get the following error as on the errorCallback:
+Last but not least, if the given user properties object contain a key email, but there is already a enrolled student in the given class with the given email, you will get the following error as the first argument on the errorCallback:
 
 ```js
 ["User with the given email is already enrolled to the given class"]
