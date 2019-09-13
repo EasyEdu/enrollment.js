@@ -4,6 +4,10 @@
     if (typeof value !== kind) throw(name + " must be a " + kind + ".");
   }
 
+  function language () {
+    return navigator.language || navigator.userLanguage;
+  }
+
   function enroll(authKey, params, sucessCallback, errorCallback) {
     validateParam(authKey, "string", "authKey");
     validateParam(params, "object", "params");
@@ -30,6 +34,7 @@
 
     req.open("POST", "http://localhost:9292/classes/enroll");
     req.setRequestHeader('Content-Type', 'application/json');
+    req.setRequestHeader('Accept-Language', language());
     req.send(JSON.stringify(params));
   }
 
