@@ -1,12 +1,12 @@
 var gulp = require('gulp'),
-    shell = require('gulp-shell'),
-    path = require('path'),
-    s3 = require('gulp-s3'),
-    minify = require('gulp-minify'),
-    gzip = require('gulp-gzip'),
-    cloudfront = require('gulp-cloudfront-invalidate'),
-    AWS = require('aws-sdk'),
-   replace = require('gulp-replace');
+  shell = require('gulp-shell'),
+  path = require('path'),
+  s3 = require('gulp-s3'),
+  minify = require('gulp-minify'),
+  gzip = require('gulp-gzip'),
+  cloudfront = require('gulp-cloudfront-invalidate'),
+  AWS = require('aws-sdk'),
+  replace = require('gulp-replace');
 
 var envName = process.env.ENV || 'staging';
 
@@ -51,16 +51,21 @@ gulp.task('deploy', shell.task([
   'gulp invalidate'
 ]));
 
+gulp.task('eslint', shell.task([
+  './node_modules/.bin/eslint enrollment.js',
+  './node_modules/.bin/eslint --parser-options=sourceType:module --env "es6" cypress/ gulpfile.js'
+]));
+
 gulp.task('config', function() {
   return gulp.src(['enrollment.js'])
-             .pipe(replace('http://localhost:9292', envConfig().url))
-             .pipe(gulp.dest('dist/' + envName))
+    .pipe(replace('http://localhost:9292', envConfig().url))
+    .pipe(gulp.dest('dist/' + envName));
 });
 
 gulp.task('minify', function() {
   return gulp.src(['dist/' + envName + '/enrollment.js'])
     .pipe(minify({ ext: { min: '.js' }, noSource: true }))
-    .pipe(gulp.dest('dist/' + envName))
+    .pipe(gulp.dest('dist/' + envName));
 });
 
 gulp.task('compress', function() {

@@ -17,7 +17,9 @@
     "url": "https://github.com/EasyEdu/enrollment/issues"
   },
   "homepage": "https://github.com/EasyEdu/enrollment#readme",
-  "dependencies": {},
+  "dependencies": {
+    "eslint": "^6.4.0"
+  },
   "devDependencies": {
     "cypress": "^3.4.1",
     "gulp": "^4.0.2",

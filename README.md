@@ -128,9 +128,14 @@ First install the npm modules:
 To run tests on browser:  
   `$ npm test`  
 
-To run tests on terminal:  
-  `$ npm run cypress`  
-
+### To run tests on terminal:  
+  
+  ## ESLint  
+    You can install the ESLint extension at VSCode editor or you can run the `gulp eslint` task.  
+    
+  ## Cypress
+    `$ npm run cypress`  
+  
 ## Deployment
 First, you will have to add some variables to your ~/.bash_profile :  
  * AWS_ACCESS_KEY_ID  

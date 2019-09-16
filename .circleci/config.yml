@@ -18,4 +18,7 @@
           paths:
             - ~/.cache/node_modules
 
+      - run: ./node_modules/.bin/eslint --parser-options=sourceType:module --env 'es6' cypress/ gulpfile.js
+      - run: ./node_modules/.bin/eslint enrollment.js
+
       - run: npm run cypress

@@ -26,7 +26,7 @@
       } else {
         onError(e);
       }
-    })
+    });
 
     req.open("POST", "http://localhost:9292/classes/enroll");
     req.setRequestHeader('Content-Type', 'application/json');
@@ -37,5 +37,5 @@
     enroll: function () {
       enroll.apply(this, arguments);
     }
-  }
+  };
 })();
