@@ -3,7 +3,7 @@
 # enrollment
 A JS client to allow enroll students on EasyEdu course's classes by integrating it on your sites.  
   
-You can integrate this client on your course landing page for example, this way you can collect lead information, and enroll then on your EasyEdu course's class.
+You can integrate this client on your course landing page for example, this way you can collect lead information, and enroll them on your EasyEdu course's class.
 
 ## Usage
 
