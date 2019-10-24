@@ -99,7 +99,7 @@ describe('enroll function', () => {
         subject(sucessCallback, errorCallback);
 
         cy.wait('@enroll').then((xhr) => {
-          expect(sucessCallback.withArgs(response)).to.be.called;
+          expect(sucessCallback.withArgs(response)).to.be.calledWith(response);
           expect(errorCallback).to.not.be.called;
         });
       });
@@ -122,7 +122,29 @@ describe('enroll function', () => {
 
         cy.wait('@enroll').then((xhr) => {
           expect(sucessCallback).to.not.be.called;
-          expect(errorCallback).to.be.called;
+          expect(errorCallback).to.be.calledWith(['Bad request']);
+        });
+      });
+    });
+
+    context('when response is negative with no body', () => {
+      it('calls errorCallback with null as response data', () => {
+        cy.server();
+        cy.route({
+          method: 'POST',
+          url: '/classes/enroll',
+          status: 400,
+          response: ''
+        }).as('enroll');
+
+        const sucessCallback = cy.spy();
+        const errorCallback = cy.spy();
+
+        subject(sucessCallback, errorCallback);
+
+        cy.wait('@enroll').then((xhr) => {
+          expect(sucessCallback).to.not.be.called;
+          expect(errorCallback).to.be.calledWith('');
         });
       });
     });

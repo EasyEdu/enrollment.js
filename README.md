@@ -128,13 +128,11 @@ First install the npm modules:
 To run tests on browser:  
   `$ npm test`  
 
-### To run tests on terminal:  
+To run tests on terminal:  
+  `$ npm run cypress`  
   
-  ## ESLint  
-    You can install the ESLint extension at VSCode editor or you can run the `gulp eslint` task.  
-    
-  ## Cypress
-    `$ npm run cypress`  
+## ESLint  
+  You can install the ESLint extension at VSCode editor or you can run the `gulp eslint` task.    
   
 ## Deployment
 First, you will have to add some variables to your ~/.bash_profile :  
