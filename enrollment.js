@@ -12,11 +12,17 @@
     var req = new XMLHttpRequest();
 
     function onError(e) {
-      errorCallback && errorCallback(JSON.parse(e.currentTarget.response));
+      errorCallback && errorCallback(parsedResponse(e.currentTarget.response));
     }
 
     function onSuccess(e) {
-      sucessCallback && sucessCallback(JSON.parse(e.currentTarget.response));
+      sucessCallback && sucessCallback(parsedResponse(e.currentTarget.response));
+    }
+
+    function parsedResponse(response) {
+      if (!response) { return response; }
+
+      return JSON.parse(response);
     }
 
     req.addEventListener("error", onError);
@@ -26,7 +32,7 @@
       } else {
         onError(e);
       }
-    })
+    });
 
     req.open("POST", "http://localhost:9292/classes/enroll");
     req.setRequestHeader('Content-Type', 'application/json');
@@ -37,5 +43,5 @@
     enroll: function () {
       enroll.apply(this, arguments);
     }
-  }
+  };
 })();
